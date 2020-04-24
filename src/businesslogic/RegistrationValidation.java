@@ -26,7 +26,7 @@ public class RegistrationValidation {
 		else if(password != confirmPassword) {
 			return false;
 		}
-		else if(password.length() < 8 && password.length() > 20) {
+		else if(password.length() <= 7 || password.length() >= 20) {
 			return false;
 		}
 		else {
@@ -53,10 +53,21 @@ public class RegistrationValidation {
 		
 	}
 	
-	//Email Validation
+	//Email Validation with as well as without regex
 	private boolean validEmail(String email) {
-		String emailValidationRegex = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
-        boolean emailValidation = email.matches(emailValidationRegex);
-		return emailValidation;
+		//String emailValidationRegex = "^[_A-Za-z0-9-]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$";
+        //boolean emailValidation = email.matches(emailValidationRegex);
+		//return emailValidation;
+		char emailCharacterArray[]= email.toCharArray();
+		if(email.length() > 0) {
+			if((email.contains("@") && email.contains(".")) || email.contains("_")) {
+				for (int i = 0; i < emailCharacterArray.length; i++) {
+					if((emailCharacterArray[i] > 64 && emailCharacterArray[i] < 91) || (emailCharacterArray[i] > 96 && emailCharacterArray[i] < 123) || (emailCharacterArray[i] > 47 && emailCharacterArray[i] < 58) || emailCharacterArray[i] == 64 || emailCharacterArray[i] == 95 || emailCharacterArray[i] == 46) {
+						return true;
+					}
+				}
+			}			
+		}
+		return false;
 	}
 }	
